@@ -171,3 +171,75 @@ class LoadingDialog extends StatelessWidget {
     );
   }
 }
+/// Input Dialog (nhập số / text)
+class InputDialog extends StatelessWidget {
+  final String title;
+  final String hintText;
+  final String confirmText;
+  final String cancelText;
+  final Function(String value) onConfirm;
+
+  const InputDialog({
+    super.key,
+    required this.title,
+    required this.hintText,
+    this.confirmText = "Lưu",
+    this.cancelText = "Hủy",
+    required this.onConfirm,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController controller = TextEditingController();
+
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: controller,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: hintText,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(cancelText),
+                  ),
+                ),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      onConfirm(controller.text.trim());
+                    },
+                    child: Text(confirmText),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

@@ -8,10 +8,12 @@ import '../transaction/transaction_controller.dart';
 
 class CategoryListScreen extends StatefulWidget {
   final Category category;
+  final DateTime month;
   
   const CategoryListScreen({
     Key? key,
     required this.category,
+    required this.month,
   }) : super(key: key);
 
   @override
@@ -35,9 +37,11 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
       ),
       body: Obx(() {
         // Lọc giao dịch theo danh mục
-        final categoryTransactions = controller.transactionList
-            .where((t) => t.category == widget.category.id)
-            .toList();
+        final categoryTransactions = controller.transactionList.where((t) {
+          return t.category == widget.category.id &&
+                t.date.year == widget.month.year &&
+                t.date.month == widget.month.month;
+        }).toList();
 
         if (categoryTransactions.isEmpty) {
           return Center(

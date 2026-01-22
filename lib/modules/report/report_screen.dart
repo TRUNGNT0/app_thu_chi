@@ -276,7 +276,7 @@ class _ReportScreenState extends State<ReportScreen> {
                 const SizedBox(height: 20),
                 
                 // Biểu đồ Pie Chart
-                Obx(() => _buildExpensePieChart()),
+                // Obx(() => _buildExpensePieChart()),
                 
                 const SizedBox(height: 20),
                 
@@ -450,7 +450,10 @@ class _ReportScreenState extends State<ReportScreen> {
           final category = CategoryHelper.getCategoryById(entry.key);
           return InkWell(
             onTap: () {
-              Get.to(() => CategoryListScreen(category: category));
+              Get.to(() => CategoryListScreen(
+              category: category,
+              month: _selectedDate,
+            ));
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
